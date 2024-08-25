@@ -42,4 +42,8 @@
   > :not(:last-child) > :last-child > * {
     border-bottom-color: $light;
   }
+
+  > :not(:first-child) {
+    border-top: 1px solid currentColor;
+  }
 }

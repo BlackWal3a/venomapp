@@ -130,12 +130,26 @@
   }
 }
 
+@include media-breakpoint-up(lg) {
+  :not(.main-content) .navbar {
+    .dropdown {
+      .dropdown-menu {
+        top: 2.25rem !important;
+
+        .dropdown .dropdown-menu {
+          top: 0 !important;
+        }
+      }
+    }
+  }
+}
+
 @include media-breakpoint-down(lg) {
   .navbar {
     &.navbar-transparent {
       .navbar-collapse {
-        padding-top: $spacer / 2;
-        padding-bottom: $spacer / 2;
+        padding-top: $spacer * 0.5;
+        padding-bottom: $spacer * 0.5;
       }
 
       .navbar-collapse.collapsing {
@@ -162,7 +176,12 @@
           flex-direction: row;
         }
       }
+    }
 
+    &.navbar-transparent {
+      .navbar-collapse {
+        box-shadow: $box-shadow-lg;
+      }
     }
   }
 }

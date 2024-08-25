@@ -1,4 +1,4 @@
-/*! nouislider - 14.6.3 - 11/19/2020 */
+/*! nouislider - 15.5.0 - 11/19/2020 */
 /* Functional styling;
  * These styles are required for noUiSlider to function.
  * You don't need to change these rules to apply your design.
@@ -22,16 +22,15 @@
 .noUi-base,
 .noUi-connects {
   width: 100%;
-  height: 6px;
+  height: 100%;
   position: relative;
   z-index: 1;
-  top: -1px;
 }
 /* Wrapper for all connect elements.
- */
+*/
 .noUi-connects {
-  z-index: 0;
   overflow: hidden;
+  z-index: 0;
 }
 .noUi-connect,
 .noUi-origin {
@@ -40,31 +39,25 @@
   z-index: 1;
   top: 0;
   right: 0;
+  height: 100%;
+  width: 100%;
   -ms-transform-origin: 0 0;
   -webkit-transform-origin: 0 0;
   -webkit-transform-style: preserve-3d;
   transform-origin: 0 0;
   transform-style: flat;
 }
-.noUi-connect {
-  height: 100%;
-  width: 100%;
-  border-radius: 0.25rem;
-}
-.noUi-origin {
-  height: 10%;
-  width: 10%;
-}
 /* Offset direction
- */
+*/
 .noUi-txt-dir-rtl.noUi-horizontal .noUi-origin {
   left: 0;
   right: auto;
 }
 /* Give origins 0 height/width so they don't interfere with clicking the
- * connect elements.
- */
+* connect elements.
+*/
 .noUi-vertical .noUi-origin {
+  top: -100%;
   width: 0;
 }
 .noUi-horizontal .noUi-origin {
@@ -88,50 +81,46 @@
   cursor: inherit !important;
 }
 /* Slider size and handle placement;
- */
+*/
 .noUi-horizontal {
-  height: 3px;
+  height: 5px;
 }
 .noUi-horizontal .noUi-handle {
-  border-radius: 50%;
-  background-color: $white;
-  box-shadow: 0 1px 13px 0 rgba(0,0,0,.2);
-  height: 15px;
   width: 15px;
-  cursor: pointer;
-  margin-top: -6px;
-  outline: none;
+  height: 15px;
   right: -10px;
+  top: -5px;
 }
 .noUi-vertical {
-  width: 3px;
+  width: 18px;
 }
 .noUi-vertical .noUi-handle {
-  width: 28px;
-  height: 34px;
-  right: -6px;
-  top: -17px;
+  width: 15px;
+  height: 15px;
+  right: -5px;
+  bottom: -10px;
 }
 .noUi-txt-dir-rtl.noUi-horizontal .noUi-handle {
   left: -17px;
   right: auto;
 }
 /* Styling;
- * Giving the connect element a border radius causes issues with using transform: scale
- */
+* Giving the connect element a border radius causes issues with using transform: scale
+*/
 .noUi-target {
-  background: $light;
-  border-radius: .25rem;
+  background: #FAFAFA;
+  border-radius: 4px;
+  // border: 1px solid #D3D3D3;
+  box-shadow: inset 0 1px 1px #F0F0F0, 0 3px 6px -5px #BBB;
 }
 .noUi-connects {
   border-radius: 3px;
 }
 .noUi-connect {
-  background-image: linear-gradient(310deg, #7928CA 0%, #FF0080 100%);
-
+  background: $primary;
 }
 /* Handles and cursors;
- */
+*/
 .noUi-draggable {
   cursor: ew-resize;
 }
@@ -139,25 +128,18 @@
   cursor: ns-resize;
 }
 .noUi-handle {
-  border: 1px solid #D9D9D9;
-  border-radius: 3px;
-  background: $white;
+  border-radius: 100%;
+  background: $primary;
   cursor: default;
-  box-shadow: inset 0 0 1px $white, inset 0 1px 7px #EBEBEB, 0 3px 6px -3px #BBB;
   webkit-transition: .3s ease 0s;
   -moz-transition: .3s ease 0s;
   -ms-transition: .3s ease 0s;
   -o-transform: .3s ease 0s;
   transition: .3s ease 0s;
 }
-.noUi-active {
-  box-shadow: inset 0 0 1px $white, inset 0 1px 7px #DDD, 0 3px 6px -3px #BBB;
-  transform: scale3d(1.5,1.5,1);
-}
-
 
 /* Disabled state;
- */
+*/
 [disabled] .noUi-connect {
   background: #B8B8B8;
 }
@@ -167,8 +149,8 @@
   cursor: not-allowed;
 }
 /* Base;
- *
- */
+*
+*/
 .noUi-pips,
 .noUi-pips * {
   -moz-box-sizing: border-box;
@@ -179,8 +161,8 @@
   color: #999;
 }
 /* Values;
- *
- */
+*
+*/
 .noUi-value {
   position: absolute;
   white-space: nowrap;
@@ -191,8 +173,8 @@
   font-size: 10px;
 }
 /* Markings;
- *
- */
+*
+*/
 .noUi-marker {
   position: absolute;
   background: #CCC;
@@ -204,8 +186,8 @@
   background: #AAA;
 }
 /* Horizontal layout;
- *
- */
+*
+*/
 .noUi-pips-horizontal {
   padding: 10px 0;
   height: 80px;
@@ -233,8 +215,8 @@
   height: 15px;
 }
 /* Vertical layout;
- *
- */
+*
+*/
 .noUi-pips-vertical {
   padding: 0 10px;
   height: 100%;
@@ -266,7 +248,7 @@
   position: absolute;
   border: 1px solid #D9D9D9;
   border-radius: 3px;
-  background: $white;
+  background: #fff;
   color: #000;
   padding: 5px;
   text-align: center;

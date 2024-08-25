@@ -1,3 +1,9 @@
+// update <html> tag border
+
+html {
+  border: none !important;
+}
+
 // Blur effect
 
 .blur {
@@ -72,6 +78,11 @@
     background-size: $gradient-animation-bg-size !important;
     animation: $device-wrapper-animation;
   }
+}
+
+hr {
+  border-top: none;
+  height: 1px;
 }
 
 // Vertical Line
@@ -317,5 +328,48 @@ hr.horizontal {
       left: $position-left !important;
       position: absolute;
     }
+  }
+}
+
+// Separator Skew
+
+.separator {
+  position: absolute;
+  top: auto;
+  right: 0;
+  left: 0;
+  overflow: hidden;
+  width: 100%;
+  height: $separator-height;
+  transform: $separator-transform;
+  pointer-events: none;
+
+  &.separator-bottom {
+    top: auto !important;
+    bottom: 0 !important;
+  }
+
+  &.separator-top {
+    top: 0 !important;
+    bottom: auto !important;
+  }
+
+  &.separator-skew {
+    height: 70px;
+  }
+  .fill-default {
+    fill: $argon-default-color;
+  }
+}
+
+.bg-default {
+  background-color: $argon-default-color;
+}
+
+// profile layout card position
+
+.card {
+  &.card-profile-bottom {
+    margin-top: 15rem;
   }
 }

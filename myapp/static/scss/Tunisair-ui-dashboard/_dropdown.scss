@@ -5,8 +5,9 @@
   .dropend {
     .dropdown-menu {
       box-shadow: $dropdown-box-shadow;
-      transition: $dropdown-transition;
+      animation: $dropdown-animation;
       cursor: pointer;
+      opacity: 0;
     }
 
     .dropdown-toggle {
@@ -34,20 +35,19 @@
       display: block;
       opacity: 0;
       top: 0;
-      transform-origin: $dropdown-transform-origin;
       pointer-events: none;
-      transform: $dropdown-transform;
+      animation: $dropdown-animation;
       -webkit-backface-visibility: hidden;
       backface-visibility: hidden;
-      will-change: transform,box-shadow;
+      will-change: animation,box-shadow;
     }
 
-    &.dropdown-hover:hover > .dropdown-menu,
+    &.dropdown-hover:hover > .dropdown-menu .dropdown-hover:hover > .dropdown-menu,
     .dropdown-menu.show {
       opacity: 1;
       pointer-events: auto;
       visibility: visible;
-      transform: $dropdown-transform-show;
+      animation: $dropdown-animation-show;
     }
 
     &.dropdown-hover:hover > .dropdown-menu:before,
@@ -95,18 +95,66 @@
 }
 
 @include media-breakpoint-down(lg) {
-  .dropdown:not(.nav-item) {
+  .navbar-toggler + .navbar-collapse {
+    .dropdown:not(.nav-item) {
+      .dropdown-menu {
+        display: block;
+        opacity: 0;
+        top: 0;
+        transform-origin: $dropdown-transform-origin;
+        pointer-events: none;
+        transform: $dropdown-transform;
+        transition: $dropdown-transition;
+        -webkit-backface-visibility: hidden;
+        backface-visibility: hidden;
+        will-change: transform,box-shadow;
+        box-shadow: $dropdown-box-shadow;
+
+        &:before {
+          font-family: "FontAwesome";
+          content: "\f0d8";
+          position: absolute;
+          top: 0;
+          left: $dropdown-animation-arrow-left-position;
+          right: auto;
+          font-size: $dropdown-animation-arrow-font-size;
+          color: $white;
+          transition: $dropdown-animation-arrow-transition;
+        }
+      }
+
+      &:not(.dropdown-hover) .dropdown-menu {
+        margin-top: $dropdown-mt !important;
+      }
+
+      .dropdown-menu.show {
+        opacity: 1;
+        pointer-events: auto;
+        visibility: visible;
+        transform: $dropdown-transform-show;
+
+        &:before {
+          top: $dropdown-hover-arrow-active-top;
+        }
+      }
+    }
+    .dropdown.nav-item .dropdown-menu {
+      background-color: transparent;
+      overflow: scroll;
+      position: relative;
+    }
+  }
+
+  .dropdown {
     .dropdown-menu {
-      display: block;
       opacity: 0;
       top: 0;
-      transform-origin: $dropdown-transform-origin;
       pointer-events: none;
-      transform: $dropdown-transform;
+      animation: $dropdown-animation;
       transition: $dropdown-transition;
       -webkit-backface-visibility: hidden;
       backface-visibility: hidden;
-      will-change: transform,box-shadow;
+      will-change: animation,box-shadow;
       box-shadow: $dropdown-box-shadow;
 
       &:before {
@@ -121,7 +169,6 @@
         transition: $dropdown-animation-arrow-transition;
       }
     }
-
     &:not(.dropdown-hover) .dropdown-menu {
       margin-top: $dropdown-mt !important;
     }
@@ -130,18 +177,21 @@
       opacity: 1;
       pointer-events: auto;
       visibility: visible;
-      transform: $dropdown-transform-show;
+      animation: $dropdown-animation-show;
 
       &:before {
         top: $dropdown-hover-arrow-active-top;
       }
     }
+
+    &.nav-item {
+      .dropdown-menu {
+        position: absolute;
+      }
+    }
   }
 
-  .dropdown.nav-item .dropdown-menu {
-    background-color: transparent;
-    overflow: scroll;
-  }
+
 
   .dropdown.nav-item .dropdown-menu-animation {
     display: block;
@@ -229,4 +279,30 @@
  .dropdown-lg-responsive {
    min-width: $dropdown-lg-width-responsive;
  }
+}
+
+// Keyframes
+
+@keyframes show-navbar-dropdown {
+  0% {
+    opacity: 0;
+    transform: translate(0, 10px) perspective(200px);
+    transition: visibility 0.25s, opacity 0.25s, transform 0.25s;
+  }
+
+  100% {
+    transform: translate(0, 0);
+    opacity: 1;
+  }
+}
+
+@keyframes hide-navbar-dropdown {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+    transform: translate(0, 10px)
+  }
 }

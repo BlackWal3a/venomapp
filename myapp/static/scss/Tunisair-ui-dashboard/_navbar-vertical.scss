@@ -2,6 +2,8 @@
 // Vertical navbar + Sidenav
 //
 
+@use "sass:math";
+
 .navbar-vertical {
   .navbar-brand > img,
   .navbar-brand-img {
@@ -27,8 +29,11 @@
         border: none;
 
         .dropdown-menu {
-          margin-left: $dropdown-item-padding-x / 2;
+          margin-left: $dropdown-item-padding-x * 0.5;
         }
+      }
+      .icon {
+        padding: 10px;
       }
     }
 
@@ -66,6 +71,7 @@
           overflow-y: auto;
           padding: 0;
           box-shadow: none;
+          z-index: 9999;
 
           .navbar-collapse {
             display: block;
@@ -146,8 +152,8 @@
           }
           // Second level
           .navbar-nav .nav .nav-link {
-            padding-top: $navbar-vertical-nav-link-padding-y / 1.5;
-            padding-bottom: $navbar-vertical-nav-link-padding-y / 1.5;
+            padding-top: calc($navbar-vertical-nav-link-padding-y / 1.5);
+            padding-bottom: calc($navbar-vertical-nav-link-padding-y / 1.5);
             padding-left: 15px;
 
             > span.sidenav-normal {
@@ -164,8 +170,17 @@
   // Define colors
   @each $color, $value in $theme-colors {
     &[data-color="#{$color}"] {
-      .navbar-nav > .nav-item > .nav-link.active .icon {
+      .navbar-nav > .nav-item > .nav-link.active {
         @include gradient-directional(nth(#{$value}, 1) 0%, nth(#{$value}, -1) 100%, $deg: 310deg);
+
+        .icon i,
+        .nav-link-text {
+          color: $white !important;
+        }
+
+        &:after {
+          color: $white;
+        }
       }
     }
   }
@@ -181,7 +196,7 @@
 //
 
 .sidenav {
-  z-index: 990;
+  z-index: 999;
 
   .navbar-brand,
   .navbar-heading {
@@ -280,13 +295,12 @@
     box-shadow: $card-box-shadow;
 
     .navbar-nav {
-      .nav-link {
-        &.active {
-          box-shadow: none;
-        }
-
-        .icon {
-          @include gradient-directional(nth($light, 1) 0%, nth($light, -1) 100%, $deg: 310deg);
+      > .nav-item {
+        .nav-link {
+          &.active {
+            background-color: #f6f9fc;
+            box-shadow: none;
+          }
         }
       }
     }
@@ -300,18 +314,7 @@
 
   .navbar-nav > .nav-item .nav-link.active {
     color: $dark;
-    background-color: $white;
-
-    .icon {
-      @include gradient-directional(nth($primary, 1) 0%, nth($primary, -1) 100%, $deg: 310deg);
-
-      svg {
-        .color-background,
-        .color-foreground {
-          fill: $white;
-        }
-      }
-    }
+    background-color: $dark-sidebar-nav-active-bg;
   }
 }
 
@@ -365,39 +368,15 @@
               box-shadow: none;
               color: rgba($dark-gradient-state,0.5);
               margin-left: $navbar-vertical-collapse-margin-left;
-
-              &:before {
-                content: "";
-                position: absolute;
-                left: $navbar-vertical-collapse-left;
-                top: $navbar-vertical-collapse-top;
-                transform: $navbar-vertical-collapse-translate;
-                height: $navbar-vertical-collapse-dot-size;
-                width: $navbar-vertical-collapse-dot-size;
-                border-radius: $border-radius-2xl;
-                background: rgba($dark-gradient-state, 0.5);
-              }
-
+              
               &.active {
                 color: $dark-gradient-state;
-
-                &:before {
-                  height: $navbar-vertical-collapse-dot-size-active;
-                  width: $navbar-vertical-collapse-dot-size-active;
-                  background: $dark-gradient-state;
-                }
               }
             }
 
             &.active {
               .nav-link {
                 color: $dark-gradient-state;
-
-                &:before {
-                  height: $navbar-vertical-collapse-dot-size-active;
-                  width: $navbar-vertical-collapse-dot-size-active;
-                  background: $dark-gradient-state;
-                }
               }
             }
             // Third level
@@ -445,6 +424,55 @@
   .docs-info {
     @include transition($transition-base);
   }
+
+  &.bg-default {
+    .navbar-nav {
+      .nav-item {
+        .nav-link {
+          color: $white;
+
+          &[data-bs-toggle="collapse"]:after {
+            color: $white;
+          }
+        }
+
+        .collapse,
+        .collapsing {
+          .nav {
+            .nav-item {
+              .nav-link {
+                color: $white;
+                opacity: .8;
+              }
+              &.active {
+                .nav-link.active {
+                  color: $white;
+                  opacity: 1;
+                }
+              }
+            }
+          }
+        }
+
+        h6 {
+          color: $white;
+        }
+      }
+    }
+    .sidenav-header {
+      .navbar-brand {
+        color: $white;
+      }
+    }
+    .sidenav-footer {
+      h6 {
+        color: $white;
+      }
+    }
+    hr {
+      background-image: $hr-horizontal-bg-image-light !important;
+    }
+  }
 }
 
 .g-sidenav-show:not(.g-sidenav-hidden) {
@@ -458,19 +486,14 @@
     }
   }
 }
-@include media-breakpoint-up(xl) {
-  .navbar-vertical {
-    .navbar-nav {
-      .nav-item {
-        .nav-link {
-          .icon {
-            padding: 10px;
-          }
-        }
-      }
-    }
-  }
 
+.g-sidenav-hidden {
+  .sidenav-footer {
+    display: none;
+  }
+}
+
+@include media-breakpoint-up(xl) {
   .g-sidenav-hidden {
     &.rtl .main-content {
       margin-right: $navbar-vertical-hidden-width !important;
@@ -599,7 +622,6 @@
           .collapse {
             .nav {
               margin-left: 1.5rem !important;
-              padding-left: 1rem !important;
 
               .nav-item {
                 .nav-link {

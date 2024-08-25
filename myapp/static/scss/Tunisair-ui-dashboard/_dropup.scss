@@ -10,15 +10,15 @@
     opacity: 0;
     transform-origin: $dropup-transform-origin;
     pointer-events: none;
-    transform: $dropup-transform;
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
     will-change: transform,box-shadow;
+    animation: $dropdown-animation;
 
-    &.show{
+    &.show {
       pointer-events: auto;
-      transform: $dropup-transform-show;
       opacity: 1;
+      animation: $dropdown-animation-show;
 
       &:after {
         bottom: -($dropup-animation-arrow-bottom-position - 2);

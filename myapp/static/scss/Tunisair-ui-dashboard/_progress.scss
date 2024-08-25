@@ -1,12 +1,14 @@
 .progress-bar {
   height: $progress-bar-height;
   border-radius: $border-radius;
-  margin-top: -2px;
 }
 
 .progress {
   overflow: visible;
 
+  &.progress-xs {
+    height: $progress-height-xs;
+  }
   &.progress-sm {
     height: $progress-height-sm;
   }

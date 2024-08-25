@@ -52,3 +52,11 @@ $hr-horizontal-bg-image-gray-light:           linear-gradient(to right, rgba(0, 
 $hr-horizontal-bg-image-dark:         linear-gradient(to right, rgba(0, 0, 0, 0), rgba(0, 0, 0, .4), rgba(0, 0, 0, 0)) !default;
 $hr-vertical-bg-image-light:          linear-gradient(to bottom, rgba(255, 255, 255, 0), white, rgba(255, 255, 255, 0)) !default;
 $hr-vertical-bg-image-dark:           linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(0, 0, 0, .4), rgba(0, 0, 0, 0)) !default;
+
+
+// Skew Separator
+
+$separator-height:                    150px !default;
+$separator-transform:                 translateZ(0) !default;
+
+$argon-default-color:                 #172b4d !default;

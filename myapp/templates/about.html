@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="76x76"
+      href="../static/img/apple-icon.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      href="../static/img/Tunisair_llogo_Deer.png"
+    />
+    <title>Tunisair Dashboard</title>
+    <!--     Fonts and icons     -->
+    <link
+      href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700"
+      rel="stylesheet"
+    />
+    <!-- Nucleo Icons -->
+    <link href="../static/css/nucleo-icons.css" rel="stylesheet" />
+    <link href="../static/css/nucleo-svg.css" rel="stylesheet" />
+    <!-- Font Awesome Icons -->
+    <script
+      src="https://kit.fontawesome.com/42d5adcbca.js"
+      crossorigin="anonymous"
+    ></script>
+    <link href="../static/css/nucleo-svg.css" rel="stylesheet" />
+    <!-- CSS Files -->
+    {% if data.dark_mode == 1 %}
+    <link id="pagestyle" href="/static/css/tunisair-dashboard.css" rel="stylesheet">
+    {% else %}
+    <link id="pagestyle" href="/static/css/tunisair-dashboard-dark-mode.css" rel="stylesheet">
+    {% endif %}
+  </head>
+
+  <body class="g-sidenav-show bg-gray-100">
+    {% include 'navbar.html' %}
+      <!-- Navbar -->
+      <nav
+        class="navbar navbar-main navbar-expand-lg px-0 mx-4 shadow-none border-radius-xl"
+        id="navbarBlur"
+        navbar-scroll="true"
+      >
+        <div class="container-fluid py-1 px-3">
+          <nav aria-label="breadcrumb">
+            <ol
+              class="breadcrumb bg-transparent mb-0 pb-0 pt-1 px-0 me-sm-6 me-5"
+            >
+              <li class="breadcrumb-item text-sm">
+                <a class="opacity-5 text-dark" href="../">Tunisair</a>
+              </li>
+              <li
+                class="breadcrumb-item text-sm text-dark active"
+                aria-current="page"
+              >
+                About
+              </li>
+            </ol>
+            <h6 class="font-weight-bolder mb-0">About</h6>
+          </nav>
+          <div
+            class="collapse navbar-collapse mt-sm-0 mt-2 me-md-0 me-sm-4"
+            id="navbar"
+          >
+            <div class="ms-md-auto pe-md-3 d-flex align-items-center"></div>
+            <ul class="navbar-nav justify-content-end">
+              <li class="nav-item d-flex align-items-center">
+                <a
+                  href="../profile"
+                  class="nav-link text-body font-weight-bold px-0"
+                >
+                  <i class="fa fa-user me-sm-1"></i>
+                  <span class="d-sm-inline d-none">{{data.username}}</span>
+                </a>
+              </li>
+              <li class="nav-item d-xl-none ps-3 d-flex align-items-center">
+                <a
+                  href="javascript:;"
+                  class="nav-link text-body p-0"
+                  id="iconNavbarSidenav"
+                >
+                  <div class="sidenav-toggler-inner">
+                    <i class="sidenav-toggler-line"></i>
+                    <i class="sidenav-toggler-line"></i>
+                    <i class="sidenav-toggler-line"></i>
+                  </div>
+                </a>
+              </li>
+              <li class="nav-item px-3 d-flex align-items-center">
+                <a href="javascript:;" class="nav-link text-body p-0">
+                  <i
+                    class="fa fa-cog fixed-plugin-button-nav cursor-pointer"
+                  ></i>
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+      <!-- End Navbar -->
+      <div class="container-fluid py-4">
+        <div class="row my-0">
+            <div class="col-lg-12 mb-lg-0 mb-4">
+              <div class="card">
+                <div class="card-body p-3">
+                  <div class="row">
+                    <div class="col-lg-">
+                      <div class="d-flex flex-column h-100">
+                        <div class="mb-4 text-center">
+                            <h5 class="mb-0 pt-2 font-weight-bolder" style="font-size: 2rem;">Tunisair Dashboard : Built by interns</h5>
+                        </div>
+                        <hr class="horizontal dark mt-0">
+                        <div>
+                            <h5 class="font-weight-bolder " style="font-size: 1.75rem;">Introduction</h5>
+                            <p>
+                                Welcome to the documentation for the <a href="../dashboard">Tunisair Dashboard</a>! This documentation provides a comprehensive overview of the dashboard's features, functionalities, and usage instructions. Whether you're a new user exploring the dashboard for the first time or a seasoned user looking for detailed information, this documentation will guide you through everything you need to know to effectively utilize the dashboard.
+                            </p>
+                        </div>
+                        
+                        <div>
+                            <h6 class="font-weight-bolder text-muted " style="font-size: 1.15rem;">Purpose and Objectives</h6>
+                            <p><a href="../dashboard">Tunisair Dashboard</a> is designed to track the fuel consumption and expenses of Tunisair. It serves as a powerful tool for monitoring these key metrics, empowering users to gain insights into fuel usage patterns and expenditure trends.</p>
+                        </div>
+                        
+                        <div>
+                            <h6 class="font-weight-bolder text-muted " style="font-size: 1.15rem;">Target Audience</h6>
+                            <p>This documentation is intended for stakeholders involved in fuel management and expense tracking within Tunisair:</p>
+                            <ul>
+                                <li><strong>Users:</strong> <a href="https://en.wikipedia.org/wiki/Business_analyst" target="_blank">Analysts</a>, <a href="https://en.wikipedia.org/wiki/Business_manager" target="_blank">managers</a>, or <a href="https://en.wikipedia.org/wiki/Stakeholder_(corporate)" target="_blank">stakeholders</a> responsible for monitoring and optimizing fuel consumption and expenses.</li>
+                                <li><strong>Administrators:</strong> Dashboard <a href="https://en.wikipedia.org/wiki/Administrator" target="_blank">administrators</a> who manage user access, permissions, and data sources.</li>
+                            </ul>
+                        </div>
+                        
+                        <h2 class="font-weight-bolder " style="font-size: 1.75rem;">How to Use This Documentation</h2>
+                          <p>To get the most out of this documentation, follow these guidelines:</p>
+                          <ol>
+                              <li><strong><a href="../dashboard">Overview</a>:</strong><br>
+                                  * The Overview interface provides a quick summary of the dashboard, highlighting the most critical metrics and data summaries.<br>
+                                  * Users can navigate to specific areas for more detailed information by clicking on related pages from this section.
+                              </li><br>
+                              <li><strong><a href="../suppliers">Suppliers</a>:</strong><br>
+                                  * The Suppliers View panel displays statistics on expenditures and fuel usage, categorized by suppliers.<br>
+                                  * This helps in analyzing supplier-specific data efficiently.
+                              </li><br>
+                              <li><strong><a href="../geography">Geography</a>:</strong><br>
+                                  * The Geography interface shows fuel consumption and expense data by Country, Town, StopOver.<br>
+                                  * Users can click on a Country to track regional consumption, expenses, and information from flight stopovers in that country.
+                              </li><br>
+                              <li><strong><a href="../timeline">Time</a>:</strong><br>
+                                  * The Time interface focuses on fuel consumption and expenses over various periods.<br>
+                                  * This helps users to understand trends and patterns over time.
+                              </li><br>
+                              <li><strong><a href="../aircrafts">Aircrafts</a>:</strong><br>
+                                  * The Aircrafts interface provides detailed information on fuel consumption categorized by different aircraft.<br>
+                                  * This allows users to compare and analyze fuel usage across various aircraft types.
+                              </li><br>
+                              <li><strong><a href="../forecasting">Prediction</a>:</strong><br>
+                                  * This interface will use powerful models to predict exchange rates, fuel consumption, and fuel expenses.<br>
+                                  * These predictions aim to provide the most accurate forecasts possible.
+                              </li><br>
+                              <li><strong><a href="../profile">Profile</a>:</strong><br>
+                                  * The Profile feature enables users to manage their dashboard settings.<br>
+                                  * Users can set their preferred currency and unit of measurement, enable password protection, and provide feedback through ratings and comments.<br>
+                                  * This section is crucial for personalizing the dashboard according to user preferences, making it easier to use and more tailored to individual needs.
+                              </li>
+                          </ol>
+                      
+                          <h2>Getting Started</h2>
+                          <p>Follow these steps to get started with the Tunisair Dashboard:</p>
+                          <ol>
+                              <li><strong>Login:</strong> Access the dashboard using your credentials provided by the administrator.</li>
+                              <li><strong>Initial Setup:</strong> Configure your profile settings, including preferred currency and units of measurement.</li>
+                              <li><strong>Explore:</strong> Navigate through the various interfaces (Overview, Suppliers, Geography, etc.) to familiarize yourself with the available data and features.</li>
+                          </ol>
+                      
+                      
+                          <h2>Security and Privacy</h2>
+                          <p>The Tunisair Dashboard is designed with robust security measures to protect sensitive data. Here are the key security protocols:</p>
+                          <ul>
+                              <li><strong>Account Creation:</strong> Only administrators can create user accounts. Users will receive their login credentials from an administrator.</li>
+                              <li><strong>Password Management:</strong> Users are encouraged to change their passwords upon first login to enhance security. Passwords should be strong and unique.</li>
+                              <li><strong>Data Confidentiality:</strong> Users are strictly prohibited from sharing dashboard information with anyone who does not have access. Unauthorized sharing of information can lead to severe consequences, including legal action by Tunisair.</li>
+                              <li><strong>User Permissions:</strong> Access to data and features is controlled by user permissions, managed by administrators to ensure data security and integrity.</li>
+                          </ul>
+                      
+                          <h2>Rules and Regulations</h2>
+                          <p>To maintain the security and integrity of the Tunisair Dashboard, all users must adhere to the following rules:</p>
+                          <div style="border: 2px solid #e74c3c; padding: 15px; background-color: #f9ebea; border-radius: 5px;">
+                              <ul style="list-style-type: none; padding-left: 0;">
+                                  <li style="margin-bottom: 10px;">
+                                      <strong style="color: #e74c3c;">1. Protect Your Credentials:</strong><br>
+                                      <span style="padding-left: 20px;">Do not share your login credentials with anyone.</span>
+                                  </li>
+                                  <li style="margin-bottom: 10px;">
+                                      <strong style="color: #e74c3c;">2. Maintain Confidentiality:</strong><br>
+                                      <span style="padding-left: 20px;">Do not share any information from the dashboard with unauthorized individuals.</span>
+                                  </li>
+                                  <li style="margin-bottom: 10px;">
+                                      <strong style="color: #e74c3c;">3. Report Issues Promptly:</strong><br>
+                                      <span style="padding-left: 20px;">Report any suspicious activity or security breaches to the administrator immediately.</span>
+                                  </li>
+                                  <li style="margin-bottom: 10px;">
+                                      <strong style="color: #e74c3c;">4. Consequences of Non-Compliance:</strong><br>
+                                      <span style="padding-left: 20px;">Failure to comply with these rules may result in disciplinary action, including termination of access and potential legal action.</span>
+                                  </li>
+                              </ul>
+                          </div>
+
+                      
+                          <h2>Troubleshooting</h2>
+                          <p>If you encounter any issues while using the dashboard, try the following steps:</p>
+                          <ul>
+                              <li><strong>Check Permissions:</strong> Verify that you have the necessary permissions to access the data and features.</li>
+                          </ul>
+                      
+                          <h2>Contact Support</h2>
+                          <p>If you need further assistance, please contact Tunisair Dashboard Support:</p>
+                          <ul>
+                              <li><strong>Email:</strong> support@tunisair.com</li>
+                              <li><strong>Phone:</strong> +216-71-123-456</li>
+                              <li><strong>Support Hours:</strong> Monday to Friday, 9 AM to 5 PM (GMT+1)</li>
+                          </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        <footer class="footer pt-3">
+          <div class="container-fluid">
+            <div class="row align-items-center justify-content-lg-between">
+              <div class="col-lg-6 mb-lg-0 mb-4">
+                <div
+                  class="copyright text-center text-sm text-muted text-lg-start"
+                >
+                  ©
+                  <script>
+                    document.write(new Date().getFullYear());
+                  </script>
+                  Tunisair Stagiaires
+                  <a class="font-weight-bold" target="_blank"></a>
+                </div>
+              </div>
+              <div class="col-lg-6">
+                <ul
+                  class="nav nav-footer justify-content-center justify-content-lg-end"
+                >
+                  <li class="nav-item">
+                    <a
+                      href="https://www.tunisair.com"
+                      class="nav-link text-muted"
+                      target="_blank"
+                      >Company</a
+                    >
+                  </li>
+                  <li class="nav-item">
+                    <a
+                      href="https://www.tunisair.com/fr/presentation"
+                      class="nav-link text-muted"
+                      target="_blank"
+                      >About Us</a
+                    >
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </footer>
+      </div>
+    </main>
+    <div class="fixed-plugin">
+      <a class="fixed-plugin-button text-dark position-fixed px-3 py-2">
+        <i class="fa fa-cog py-2"> </i>
+      </a>
+      <div class="card shadow-lg">
+        <div class="card-header pb-0 pt-3">
+          <div class="float-start">
+            <h5 class="mt-3 mb-0">Tunisair Dashboard Configurator</h5>
+            <p>See our dashboard options.</p>
+          </div>
+          <div class="float-end mt-4">
+            <button
+              class="btn btn-link text-dark p-0 fixed-plugin-close-button"
+            >
+              <i class="fa fa-close"></i>
+            </button>
+          </div>
+          <!-- End Toggle Button -->
+        </div>
+        <hr class="horizontal dark my-1" />
+        <div class="card-body pt-sm-3 pt-0">
+          <!-- Sidebar Backgrounds -->
+          <div>
+            <h6 class="mb-0">Sidebar Colors</h6>
+          </div>
+          <a href="javascript:void(0)" class="switch-trigger background-color">
+            <div class="badge-colors my-2 text-start">
+              <span
+                class="badge filter bg-gradient-primary active"
+                data-color="primary"
+                onclick="sidebarColor(this)"
+              ></span>
+              <span
+                class="badge filter bg-gradient-dark"
+                data-color="dark"
+                onclick="sidebarColor(this)"
+              ></span>
+              <span
+                class="badge filter bg-gradient-info"
+                data-color="info"
+                onclick="sidebarColor(this)"
+              ></span>
+              <span
+                class="badge filter bg-gradient-success"
+                data-color="success"
+                onclick="sidebarColor(this)"
+              ></span>
+              <span
+                class="badge filter bg-gradient-warning"
+                data-color="warning"
+                onclick="sidebarColor(this)"
+              ></span>
+              <span
+                class="badge filter bg-gradient-danger"
+                data-color="danger"
+                onclick="sidebarColor(this)"
+              ></span>
+            </div>
+          </a>
+          <!-- Sidenav Type -->
+          <div class="mt-3">
+            <h6 class="mb-0">Sidenav Type</h6>
+            <p class="text-sm">Choose between 2 different sidenav types.</p>
+          </div>
+          <div class="d-flex">
+            <button
+              class="btn bg-gradient-primary w-100 px-3 mb-2 active"
+              data-class="bg-transparent"
+              onclick="sidebarType(this)"
+            >
+              Transparent
+            </button>
+            <button
+              class="btn bg-gradient-primary w-100 px-3 mb-2 ms-2"
+              data-class="bg-white"
+              onclick="sidebarType(this)"
+            >
+              White
+            </button>
+          </div>
+          <p class="text-sm d-xl-none d-block mt-2">
+            You can change the sidenav type just on desktop view.
+          </p>
+          <!-- Navbar Fixed -->
+          <div class="mt-3">
+            <h6 class="mb-0">Navbar Fixed</h6>
+          </div>
+          <div class="form-check form-switch ps-0">
+            <input
+              class="form-check-input mt-1 ms-auto"
+              type="checkbox"
+              id="navbarFixed"
+              onclick="navbarFixed(this)"
+            />
+          </div>
+          <hr class="horizontal dark my-sm-4" />
+        </div>
+      </div>
+    </div>
+    <!--   Core JS Files   -->
+    <script src="../static/js/core/popper.min.js"></script>
+    <script src="../static/js/core/bootstrap.min.js"></script>
+    <script src="../static/js/plugins/perfect-scrollbar.min.js"></script>
+    <script src="../static/js/plugins/smooth-scrollbar.min.js"></script>
+    <script src="../static/js/plugins/chartjs.min.js"></script>
+    <script>
+      var win = navigator.platform.indexOf("Win") > -1;
+      if (win && document.querySelector("#sidenav-scrollbar")) {
+        var options = {
+          damping: "0.5",
+        };
+        Scrollbar.init(document.querySelector("#sidenav-scrollbar"), options);
+      }
+    </script>
+    <!-- Github buttons -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
+    <script src="../static/js/soft-ui-dashboard.min.js"></script>
+  </body>
+</html>

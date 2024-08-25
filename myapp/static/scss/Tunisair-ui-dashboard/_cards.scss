@@ -11,7 +11,7 @@
 
   &.card-plain {
     background-color: $card-plain-bg-color;
-    box-shadow: $card-plain-box-shadow;
+    box-shadow: $card-plain-box-shadow !important;
   }
 
   .card-footer {
@@ -37,3 +37,4 @@
 }
 
 @import 'cards/card-background';
+@import 'cards/card-carousel';

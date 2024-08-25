@@ -2,17 +2,27 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path('', views.aircraft_list, name='aircraft_list'),
-    path('aircraft/', views.aircraft_list, name='aircraft_list'),
-    path('dashboard/', views.aircraft_list, name='dashboard'),
-    path('suppliers/', views.suppliers_view, name='suppliers'),
+    path('', views.landingpage_view, name='landingpage'),
+    path('overview/', views.overview, name='overview'),
+    path('cartographie/', views.cartographie, name='cartographie'),
+    path('especes/', views.especes, name='especes'),
+    path('medecin/', views.medecin, name='medecin'),
+    path('urgence/', views.urgence, name='urgence'),
+    path('geography/', views.geo_view, name='geography'),
+    path('timeline/',views.time_view, name='timeline'),
+    path('aircrafts/', views.aircrafts_view, name='aircrafts'),
     path('sign-in/', views.signin_view, name='sign-in'),
-    path('sign-up/', views.signup_view, name='sign-up'),
+    path('change-password/', views.change_password, name='change_password'),
     path('rtl/', views.prevision_view, name='rtl'),
-    path('profile/', views.prevision_view, name='profile'),
-    path('receive_data/', views.receive_data, name='receive_data'),
-    path('receive_DeliveryOrders/', views.receive_deliveryorders, name='receive_DeliveryOrders'),
-
+    path('profile/', views.profile_view, name='profile'),
+    path('logout/', views.logout_view, name='logout'),
+    path('forecasting/', views.forecasting_view, name='forecasting'),
+    path('country_details/', views.country_details, name='country_details'),
+    path('about/', views.about_view, name='about'),
+    path('submit-rate-and-notes/', views.submit_rate_and_notes, name='submit_rate_and_notes'),
+    path('signup/', views.signup, name='signup'),
+    path('loginn/', views.loginn, name='loginn'),
+    path('report_bite_api/', views.report_bite_api, name='report_bite_api'),
 
 
 ]

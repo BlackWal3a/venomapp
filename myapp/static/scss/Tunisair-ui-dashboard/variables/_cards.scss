@@ -1,4 +1,4 @@
-$card-box-shadow:                   0 20px 27px 0 rgba(0,0,0,0.05)  !default;
+$card-box-shadow:                   0 0 2rem 0 rgba(136, 152, 170, .15)  !default;
 $card-background-blur:              rgba(255, 255, 255, 0.8) !default;
 
 $card-header-padding:               1.5rem !default;
@@ -60,3 +60,9 @@ $card-full-bg-width:                100% !default;
 $card-full-bg-height:               $card-full-bg-width !default;
 $card-full-bg-position:             absolute !default;
 $card-full-bg-radius:               $card-bg-filter-radius !default;
+
+$card-carousel-prev-icon-position:  3rem !default;
+$card-carousel-icons-top:           2rem !default;
+$card-carousel-icons-zindex:        5 !default;
+$card-carousel-icons-width:         1rem !default;
+$card-carousel-icons-height:        $card-carousel-icons-width !default;

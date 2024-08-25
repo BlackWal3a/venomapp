@@ -1,10 +1,8 @@
 .btn {
   margin-bottom: $btn-margin-bottom;
   letter-spacing: $a-letter-spacing;
-  text-transform: uppercase;
+  text-transform: none;
   box-shadow: $btn-box-shadow;
-  background-size: $btn-background-size;
-  background-position-x: $btn-background-position-x;
 
   &:not([class*="btn-outline-"]) {
     border: 0;
@@ -15,7 +13,6 @@
   &:active:hover {
     box-shadow: $btn-hover-box-shadow;
     transform: $btn-active-hover-transform;
-    opacity: $btn-hover-opacity;
   }
 
   @include hover {
@@ -40,9 +37,16 @@
       box-shadow: none;
     }
   }
+
   &.btn-round {
     border-radius: $btn-border-rounded;
   }
+
+  &.btn-xs {
+    padding: $btn-padding-y-xs $btn-padding-x-xs;
+    font-size: $btn-font-size-xs;
+  }
+  
   // Button Just Icon
 
   &.btn-icon-only {
@@ -153,13 +157,6 @@
     }
   }
 
-  // .btn-#{$color},
-  // .btn.bg-gradient-#{$color}{
-  //   &:focus{
-  //     box-shadow: 0 0 0 3px rgba($value,.5);
-  //   }
-  // }
-
   .btn-outline-#{$color} {
     box-shadow: none;
     @include hover {
@@ -188,15 +185,3 @@
   }
 }
 
-// buttons box-shadow
-
-@each $color, $value in $theme-colors {
-  .btn-#{$color},
-  .btn.bg-gradient-#{$color}{
-    //box-shadow: $btn-box-shadow-values rgba($value, .2);
-
-    @include hover {
-      //box-shadow: $btn-box-shadow-hover-values rgba($value, .2);
-    }
-  }
-}
