@@ -11,10 +11,18 @@ from datetime import datetime, timedelta
 import json
 import pandas as pd
 from decimal import Decimal
-
-from .models import Account, BiteReport, NormalUser
+from django.http import HttpResponseBadRequest
+from django.utils.dateparse import parse_datetime
+from .models import Account, BiteReport, NormalUser,EmergencyData  
 from .forms import UnitForm, DateRangeForm, DateGeoRangeForm, CurrencyForm, SupplierDateRangeForm
 from myapp.forms import NoteForm
+from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+from .models import EmergencyData
+import json
+from django.core.files.base import ContentFile
+import base64
+from datetime import datetime
 
 @csrf_exempt
 def signup(request):
@@ -51,32 +59,56 @@ def loginn(request):
             return JsonResponse({'error': 'User not found'}, status=400)
     return JsonResponse({'error': 'Invalid request method'}, status=400)
 
+
 @csrf_exempt
 def report_bite_api(request):
     if request.method == 'POST':
-        data = json.loads(request.body)
-        place_of_bite = data.get('place_of_bite')
-        longitude = data.get('longitude')
-        latitude = data.get('latitude')
-        date = parse_date(data.get('date'))
-        time_since_bite = data.get('time_since_bite')
-        symptom = data.get('symptom')
-        phone_number = data.get('phone_number')
+        # Print the entire request body for debugging
+        print(request.body)  # Log the raw request body
+        
+        # Handling normal data
+        username = request.POST.get('username')
+        nom_complet = request.POST.get('nom_complet')
+        date_heure_envenimation = request.POST.get('date_heure_envenimation')
+        lieu_morsure = request.POST.get('lieu_morsure')
+        lieu_envenimation = request.POST.get('lieu_envenimation')
+        type_animal = request.POST.get('type_animal')
+        allergies = request.POST.get('allergies')
+        antecedents = request.POST.get('antecedents')
 
-        bite_report = BiteReport(
-            place_of_bite=place_of_bite,
-            longitude=longitude,
-            latitude=latitude,
-            date=date,
-            time_since_bite=time_since_bite,
-            symptom=symptom,
-            phone_number=phone_number
+        # Handling the image file
+        animal_image = request.FILES.get('animal_image')
+
+        # Log received data for debugging
+        print(f"Username: {username}, Nom Complet: {nom_complet}, Date Heure: {date_heure_envenimation}, "
+              f"Lieu Morsure: {lieu_morsure}, Lieu Envenimation: {lieu_envenimation}, "
+              f"Type Animal: {type_animal}, Allergies: {allergies}, Antecedents: {antecedents}")
+
+        # Parse the date if needed
+        try:
+            date_heure_envenimation = datetime.strptime(date_heure_envenimation, "%Y-%m-%d %H:%M:%S")
+        except ValueError:
+            return JsonResponse({'error': 'Invalid date format'}, status=400)
+
+        # Save the data in the model
+        bite_report = EmergencyData(
+            username=username,
+            nom_complet=nom_complet,
+            date_heure_envenimation=date_heure_envenimation,
+            lieu_morsure=lieu_morsure,
+            lieu_envenimation=lieu_envenimation,
+            type_animal=type_animal,
+            allergies=allergies,
+            antecedents=antecedents,
+            animal_image=animal_image  # The image is stored here
         )
         bite_report.save()
 
         return JsonResponse({'success': True, 'message': 'Bite report submitted successfully'})
 
     return JsonResponse({'error': 'Invalid request method'}, status=400)
+
+
 
 # Assuming user has an associated Account object
 @login_required
@@ -102,13 +134,116 @@ def especes(request : HttpRequest):
     current_path = request.path
     return render(request, 'Especes.html', {'current_path':current_path})
 
+from django.http import HttpResponseBadRequest
+from django.shortcuts import redirect, render
+from .models import EmergencyData, NormalUser
+from django.contrib.auth.decorators import login_required
+
 @login_required
-def medecin(request : HttpRequest):
-    account = request.user.account  # Assuming user has an associated Account object
-    
-    
+def medecin(request):
+    if request.method == 'POST':
+        try:
+            # Retrieve form data
+            nom_complet = request.POST.get('nom_complet')
+            age = int(request.POST.get('age'))
+            sexe = request.POST.get('sexe')
+            poids = float(request.POST.get('poids'))
+            taille = float(request.POST.get('taille'))
+            date_heure_envenimation = request.POST.get('date_heure')
+            lieu_envenimation = request.POST.get('lieu_envenimation')
+            activite = request.POST.get('activite')
+            lieu_morsure = request.POST.get('lieu_morsure')
+            nombre_morsures = int(request.POST.get('nombre_morsures'))
+            recidivistes = request.POST.get('recidivistes')
+            type_animal = request.POST.get('type_animal')
+            taille_animal = request.POST.get('taille_animal')
+            couleur_animal = request.POST.get('couleur_animal')
+            temperature = float(request.POST.get('temperature'))
+            pression = float(request.POST.get('pression'))
+            
+            # Get selected case
+            selected_case = request.POST.get('case')  # Ensure this field is in your form
+            
+            # Dictionary for treatment instructions based on selected case
+            treatment_instructions_dict = {
+                "0": "Surveillance 4 H.",
+                "1": "Traitement antalgique, Surveillance 6 - 12 H.",
+                "2": "Surveillance signes vitaux, abord veineux, oxygène, Antivenin (SAS), Transport médicalisé à l’hôpital.",
+                "4": "Réanimation, Antivenin (SAS), Dobutamin."
+            }
+
+            # Get treatment instructions based on the selected case
+            treatment_instructions = treatment_instructions_dict.get(selected_case, "")
+
+            # Get emergency_id from the request
+            emergency_id = request.POST.get('emergency_id')  # You can pass this in hidden input field
+            print(emergency_id)
+            if emergency_id:
+                # Update existing record if emergency_id is provided
+                emergency_data = EmergencyData.objects.get(id=emergency_id)
+                emergency_data.nom_complet = nom_complet
+                emergency_data.age = age
+                emergency_data.sexe = sexe
+                emergency_data.poids = poids
+                emergency_data.taille = taille
+                emergency_data.date_heure_envenimation = date_heure_envenimation
+                emergency_data.lieu_envenimation = lieu_envenimation
+                emergency_data.activite = activite
+                emergency_data.lieu_morsure = lieu_morsure
+                emergency_data.nombre_morsures = nombre_morsures
+                emergency_data.recidivistes = recidivistes
+                emergency_data.type_animal = type_animal
+                emergency_data.taille_animal = taille_animal
+                emergency_data.couleur_animal = couleur_animal
+                emergency_data.temperature = temperature
+                emergency_data.pression = pression
+                emergency_data.action_message = treatment_instructions  # Update field
+            else:
+                # Create new record
+                emergency_data = EmergencyData(
+                    username="Nejib",
+                    nom_complet=nom_complet,
+                    age=age,
+                    sexe=sexe,
+                    poids=poids,
+                    taille=taille,
+                    date_heure_envenimation=date_heure_envenimation,
+                    lieu_envenimation=lieu_envenimation,
+                    activite=activite,
+                    lieu_morsure=lieu_morsure,
+                    nombre_morsures=nombre_morsures,
+                    recidivistes=recidivistes,
+                    type_animal=type_animal,
+                    taille_animal=taille_animal,
+                    couleur_animal=couleur_animal,
+                    temperature=temperature,
+                    pression=pression,
+                    action_message=treatment_instructions  # New field
+                )
+
+            # Save emergency data
+            emergency_data.save()
+            return redirect('medecin')  # Redirect after saving
+
+        except Exception as e:
+            return HttpResponseBadRequest(f"Error processing request: {e}")
+
+    # For GET requests, get patients and emergencies
+    patients = NormalUser.objects.all()
+    emergencies = EmergencyData.objects.all()
     current_path = request.path
-    return render(request, 'Medecin.html', {'current_path':current_path})
+    return render(request, 'Medecin.html', {'current_path': current_path, 'patients': patients, 'emergencies': emergencies})
+
+csrf_exempt
+def delete_emergency(request, emergency_id):
+    if request.method == "DELETE":
+        try:
+            emergency = EmergencyData.objects.get(id=emergency_id)
+            emergency.delete()
+            return JsonResponse({"success": True, "message": "Urgence supprimée avec succès."})
+        except EmergencyData.DoesNotExist:
+            return JsonResponse({"error": "Emergency not found."}, status=404)
+    return JsonResponse({"error": "Invalid request method."}, status=400)
 
 @login_required
 def urgence(request : HttpRequest):
@@ -765,96 +900,6 @@ def aircrafts_view(request):
 
     }
     return render(request, 'aircrafts.html', {'data': data, 'current_path': current_path})
-
-import pickle 
-import joblib
-import logging
-
-logger = logging.getLogger(__name__)
-# Load the trained model outside the view function
-model = joblib.load('C:/Users/HICHEM BEN/Desktop/ml models/ExchangeRatesModelV-Final.joblib')
-invoice_model = joblib.load('C:/Users/HICHEM BEN/Desktop/ml models/Try3_expenses.joblib')
-deliveryorders_model = joblib.load('C:/Users/HICHEM BEN/Desktop/ml models/Try2.joblib')
-
-@login_required
-@csrf_exempt
-def forecasting_view(request):
-    if request.user.is_authenticated:
-        account = request.user.account
-        username1 = request.user.username
-        dark_mode = int(account.dark_mode)
-        
-    predicted_value = 'Fill Fields'
-    predicted_values = 'Fill Fields'
-    predicted_valuess = 'Fill Fields'
-    
-    if request.method == 'POST':
-        form_type = request.POST.get('form_type')
-
-        if form_type == 'sample_prediction':
-            year = request.POST.get('Year')  
-            month = request.POST.get('Month')  
-            day = request.POST.get('Day')  
-            From = request.POST.get('From')  
-            To = request.POST.get('To')  
-
-            sample_data = pd.DataFrame({
-                'Year': [year],
-                'Month': [month],
-                'Day': [day],
-                'ExchangeRateSourceId': [From],
-                'FromCurrencyId': [To]
-            })
-
-            predicted_ratios = model.predict(sample_data)
-            predicted_value = predicted_ratios[0]
-            print(predicted_value)
-        
-        elif form_type == 'invoice_prediction':
-            year = request.POST.get('Year1')  
-            month = request.POST.get('Month1')  
-            day = request.POST.get('Day1')  
-            From = request.POST.get('Quantity')  
-            To = request.POST.get('Taxes')  
-
-            for_prediction = pd.DataFrame({
-                'StartYear': [year],
-                'StartMonth': [month],
-                'StartDay': [day],
-                'TotalQuantity': [From],  
-                'TaxesAmount': [To],         
-            })
-
-            predicted_ratioss = invoice_model.predict(for_prediction)
-            predicted_values = predicted_ratioss[0]
-            print(predicted_values)
-        
-        elif form_type == 'delivery_prediction':
-            year = request.POST.get('Year2')  
-            month = request.POST.get('Month2')  
-            day = request.POST.get('Day2')  
-            price = request.POST.get('Price')  
-
-            for_predictiona = pd.DataFrame({
-                'StartYear': [year],
-                'StartMonth': [month],
-                'StartDay': [day],
-                'Price': [price],  
-            })
-
-            predicted_ratiosss = deliveryorders_model.predict(for_predictiona)
-            predicted_valuess = predicted_ratiosss[0]
-            print(predicted_valuess)
-                          
-    current_path = request.path
-    data = {
-        'username': username1,
-        'dark_mode': dark_mode,
-        'predicted_value': predicted_value,
-        'predicted_values': predicted_values,
-        'predicted_valuess': predicted_valuess,
-    }
-    return render(request, 'forecasting.html', {'data': data, 'current_path': current_path})
 
 
 def logout_view(request):

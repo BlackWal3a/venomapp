@@ -16,13 +16,13 @@ urlpatterns = [
     path('rtl/', views.prevision_view, name='rtl'),
     path('profile/', views.profile_view, name='profile'),
     path('logout/', views.logout_view, name='logout'),
-    path('forecasting/', views.forecasting_view, name='forecasting'),
     path('country_details/', views.country_details, name='country_details'),
     path('about/', views.about_view, name='about'),
     path('submit-rate-and-notes/', views.submit_rate_and_notes, name='submit_rate_and_notes'),
     path('signup/', views.signup, name='signup'),
     path('loginn/', views.loginn, name='loginn'),
     path('report_bite_api/', views.report_bite_api, name='report_bite_api'),
+    path('delete-emergency/<int:emergency_id>/', views.delete_emergency, name='delete_emergency'),
 
 
 ]

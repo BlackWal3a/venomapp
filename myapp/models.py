@@ -47,6 +47,7 @@ from django.db import models
 from django.contrib.auth.models import User
 
 class BiteReport(models.Model):
+    username = models.CharField(max_length=255, unique=True)
     place_of_bite = models.CharField(max_length=255)
     longitude = models.FloatField()
     latitude = models.FloatField()
@@ -57,3 +58,33 @@ class BiteReport(models.Model):
 
     def __str__(self):
         return self.place_of_bite
+
+from django.contrib.auth.models import User
+
+class EmergencyData(models.Model):
+    username = models.CharField(max_length=255)
+    nom_complet = models.CharField(max_length=255)
+    age = models.IntegerField(null=True, blank=True)
+    sexe = models.CharField(max_length=10)
+    poids = models.DecimalField(null=True, blank=True, max_digits=5, decimal_places=2)
+    taille = models.DecimalField(null=True, blank=True, max_digits=5, decimal_places=2)
+    date_heure_envenimation = models.CharField(max_length=255)
+    lieu_envenimation = models.CharField(max_length=255)
+    activite = models.CharField(max_length=255)
+    lieu_morsure = models.CharField(max_length=255)
+    nombre_morsures = models.IntegerField(null=True, blank=True)
+    recidivistes = models.CharField(max_length=255)
+    type_animal = models.CharField(max_length=255)
+    taille_animal = models.CharField(max_length=255, blank=True, null=True)
+    couleur_animal = models.CharField(max_length=255, blank=True, null=True)
+    temperature = models.DecimalField(max_digits=5, decimal_places=2, blank=True, null=True)
+    pression = models.DecimalField(max_digits=5, decimal_places=2, blank=True, null=True)
+    clinical_symptoms = models.TextField(null=True, blank=True)
+    action_message = models.TextField(null=True, blank=True)
+    allergies = models.TextField(null=True, blank=True)
+    antecedents = models.TextField(null=True, blank=True)
+    animal_image = models.ImageField(upload_to='animal_images/', null=True, blank=True)  # New field
+
+    def __str__(self):
+        return f"Emergency data for {self.nom_complet}"
+
